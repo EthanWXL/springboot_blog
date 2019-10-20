@@ -7,6 +7,7 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -33,8 +34,8 @@ public class AuthController {
     @GetMapping("/auth")
     @ResponseBody
     public Object auth() {
-        String userName = SecurityContextHolder.getContext().getAuthentication().getName();
-        User loggedInUser = userService.getUserByUserName(userName);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User loggedInUser = userService.getUserByUserName(authentication==null?null:authentication.getName());
         if (loggedInUser == null) {
             return Result.success("用户没有登录", false, null);
         } else {
@@ -50,6 +51,7 @@ public class AuthController {
         if (loggedInUser == null) {
             return Result.failure("用户没有登录");
         } else {
+            SecurityContextHolder.clearContext();
             return Result.success("注销成功", true, null);
         }
     }
@@ -59,7 +61,7 @@ public class AuthController {
     public Result register(@RequestBody Map<String, Object> userNameAndPassword) {
         String username = userNameAndPassword.get("username").toString();
         String password = userNameAndPassword.get("password").toString();
-        User user = userService.getUserByUserName(username);
+//        User user = userService.getUserByUserName(username);
         if (password == null || username == null) {
             return Result.failure("用户名和密码不能为空");
         }
@@ -71,7 +73,7 @@ public class AuthController {
         }
         try {
             userService.save(username, password);
-            return Result.success("注册成功", true, user);
+            return Result.success("注册成功", true, userService.getUserByUserName(username));
         } catch (DuplicateKeyException e) {
             return Result.failure("用户名已被注册");
         }
