@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.mybatis.example.BlogMapper">
+    <select id="selectBlog" resultMap="blog">
+        SELECT
+        BLOG.id as blog_id,
+        BLOG.title as blog_title,
+        BLOG.description as blog_description,
+        BLOG.content as blog_conent,
+        BLOG.updated_at as blog_updated_at,
+        BLOG.created_at as blog_created_at,
+        USER.id as user_id,
+        USER.username as user_username,
+        USER.avatar as user_avatar,
+        USER.updated_at as user_updated_at,
+        USER.created_at as user_created_at
+        FROM BLOG
+        LEFT OUTER JOIN USER
+        ON BLOG.user_id = USER.id
+        <if test="user_id != null">
+            WHERE BLOG.user_id = #{user_id}
+        </if>
+        limit ${offset}, #{limit}
+    </select>
+    <select id="countBlog" resultType="int">
+        SELECT count(*) FROM BLOG
+        <if test="user_id != null">
+            WHERE user_id = #{userId}
+        </if>
+    </select>
+
+    <insert id="insertBlog" parameterType="hello.entity.Blog" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO blog (user_id, title, description, content, created_at, updated_at)
+        VALUES (#{userId}, #{title}, #{description}, #{content}, now(), now())
+    </insert>
+
+    <update id="updateBlog" parameterType="hello.entity.Blog">
+        UPDATE BLOG
+        SET title       = #{title},
+        content     = #{content},
+        description = #{description},
+        updated_at  = now()
+        WHERE id = #{id}
+    </update>
+
+    <select id="selectBlogById" resultMap="blog">
+        SELECT BLOG.id          as blog_id,
+        BLOG.title       as blog_title,
+        BLOG.description as blog_description,
+        BLOG.content     as blog_content,
+        BLOG.updated_at  as blog_updated_at,
+        BLOG.created_at  as blog_created_at,
+        USER.id          as user_id,
+        USER.username    as user_username,
+        USER.avatar      as user_avatar,
+        USER.updated_at  as user_updated_at,
+        USER.created_at  as user_created_at
+        FROM BLOG
+        LEFT OUTER JOIN USER
+        ON BLOG.user_id = USER.id
+        WHERE BLOG.id = #{id}
+    </select>
+
+    <delete id="deleteBlog" parameterType="int">
+        DELETE
+        FROM BLOG
+        WHERE id = #{id}
+    </delete>
+
+    <resultMap id="blog" type="hello.entity.Blog">
+        <id property="id" column="blog_id"/>
+        <result property="title" column="blog_title"/>
+        <result property="description" column="blog_description"/>
+        <result property="content" column="blog_content"/>
+        <result property="updatedAt" column="blog_updated_at"/>
+        <result property="createdAt" column="blog_created_at"/>
+        <association property="user" javaType="hello.entity.User">
+            <id property="id" column="user_id"/>
+            <result property="username" column="user_username"/>
+            <result property="avatar" column="user_avatar"/>
+            <result property="updatedAt" column="user_updated_at"/>
+            <result property="createdAt" column="user_created_at"/>
+        </association>
+    </resultMap>
+</mapper>

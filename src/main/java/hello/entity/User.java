@@ -22,6 +22,10 @@ public class User {
         this.updatedAt = Instant.now();
     }
 
+    public Integer getId() {
+        return id;
+    }
+
     public String getUsername() {
         return username;
     }
