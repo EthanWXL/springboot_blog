@@ -45,7 +45,7 @@ class AuthControllerTest {
 
     @BeforeEach
     void setUP() {
-        mockMVC = MockMvcBuilders.standaloneSetup(new AuthController(mockUserService, mockManager,mockAuthService)).build();
+        mockMVC = MockMvcBuilders.standaloneSetup(new AuthController(mockUserService, mockManager, mockAuthService)).build();
     }
 
     @Test

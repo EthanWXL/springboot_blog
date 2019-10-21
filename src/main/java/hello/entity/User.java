@@ -38,10 +38,6 @@ public class User {
         return encodedPassword;
     }
 
-    public void setEncodedPassword(String encodedPassword) {
-        this.encodedPassword = encodedPassword;
-    }
-
     public String getAvatar() {
         return avatar;
     }
@@ -65,6 +61,5 @@ public class User {
     public void setUpdatedAt(Instant updatedAt) {
         this.updatedAt = updatedAt;
     }
-
 
 }

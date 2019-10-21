@@ -28,7 +28,6 @@ public class UserService implements UserDetailsService {
         userMapper.storeIntoDatabase(username, bCryptPasswordEncoder.encode(password));
     }
 
-
     public User getUserByUserName(String username) {
         return userMapper.findUserByUserName(username);
     }

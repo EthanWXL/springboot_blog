@@ -72,7 +72,7 @@ public class AuthController {
         } catch (DuplicateKeyException e) {
             return UserResult.failure("user already exists");
         }
-        return UserResult.success("注册成功", userService.getUserByUserName(username),false);
+        return UserResult.success("注册成功",userService.getUserByUserName(username),false);//false
     }
 
     @PostMapping("/auth/login")
@@ -81,7 +81,6 @@ public class AuthController {
         if (request.getHeader("user-agent") == null || !request.getHeader("user-agent").contains("Mozilla")) {
             return "死爬虫去死吧";
         }
-
 
         String username = usernameAndPassword.get("username").toString();
         String password = usernameAndPassword.get("password").toString();
@@ -97,11 +96,9 @@ public class AuthController {
 
         try {
             authenticationManager.authenticate(token);
-            // 把用户信息保存在一个地方
-            //   Cookie
-            SecurityContextHolder.getContext().setAuthentication(token);
 
-            return UserResult.success("登录成功", userService.getUserByUserName(username),true);
+            SecurityContextHolder.getContext().setAuthentication(token);
+            return UserResult.success("登录成功",userService.getUserByUserName(username),true );//true
         } catch (BadCredentialsException e) {
             return UserResult.failure("密码不正确");
         }
