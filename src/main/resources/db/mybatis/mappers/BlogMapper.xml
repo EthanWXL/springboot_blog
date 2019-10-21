@@ -32,7 +32,7 @@
     </select>
 
     <insert id="insertBlog" parameterType="hello.entity.Blog" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
-        INSERT INTO blog (user_id, title, description, content, created_at, updated_at)
+        INSERT INTO BLOG (user_id, title, description, content, created_at, updated_at)
         VALUES (#{userId}, #{title}, #{description}, #{content}, now(), now())
     </insert>
 

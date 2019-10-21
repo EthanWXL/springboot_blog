@@ -1,6 +1,7 @@
 package hello.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import hello.service.AuthService;
 import hello.service.UserService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -39,10 +40,12 @@ class AuthControllerTest {
     private AuthenticationManager mockManager;
     @Mock
     private UserService mockUserService;
+    @Mock
+    private AuthService mockAuthService;
 
     @BeforeEach
     void setUP() {
-        mockMVC = MockMvcBuilders.standaloneSetup(new AuthController(mockUserService, mockManager)).build();
+        mockMVC = MockMvcBuilders.standaloneSetup(new AuthController(mockUserService, mockManager,mockAuthService)).build();
     }
 
     @Test
