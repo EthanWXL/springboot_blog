@@ -98,7 +98,7 @@ public class AuthController {
             authenticationManager.authenticate(token);
 
             SecurityContextHolder.getContext().setAuthentication(token);
-            return UserResult.success("登录成功",userService.getUserByUserName(username),true );//true
+            return UserResult.success("登录成功",userService.getUserByUserName(username),true );
         } catch (BadCredentialsException e) {
             return UserResult.failure("密码不正确");
         }
