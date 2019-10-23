@@ -4,7 +4,9 @@ package hello.entity;
 
 public abstract class Result<T> {
     public enum ResultStatus {
+        //status；ok
         OK("ok"),
+        //status: fail
         FAIL("fail");
 
         private String status;
