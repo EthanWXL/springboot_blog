@@ -1,28 +1,30 @@
 package hello.entity;
 
 public class UserResult extends Result<User> {
-    private boolean isLogin;
+    boolean isLogin;
 
-    public static UserResult failure(String msg) {
-        return new UserResult("fail", msg, null, false);
+    protected UserResult(ResultStatus status, String msg, User user, boolean isLogin) {
+        super(status, msg, user);
+        this.isLogin = isLogin;
     }
 
     public static UserResult success(String msg, boolean isLogin) {
-        return new UserResult("ok", msg, null, isLogin);
+        return new UserResult(ResultStatus.OK, msg, null, isLogin);
     }
 
     public static UserResult success(User user) {
-        return new UserResult("ok", null, user, true);
+        return new UserResult(ResultStatus.OK, null, user, true);
     }
 
-    public static UserResult success(String msg, User user, boolean isLogin) {
-        return new UserResult("ok", msg, user, isLogin);
+    public static UserResult failure(String msg) {
+        return new UserResult(ResultStatus.FAIL, msg, null, false);
     }
 
-    private UserResult(String status, String msg, User user, boolean isLogin) {
-        super(status, msg, user);
-        this.isLogin = isLogin;
-
+    public static UserResult success(String msg, User user,boolean isLogIn) {
+        return new UserResult(ResultStatus.OK, msg, user, isLogIn);
     }
 
+    public boolean getIsLogin() {
+        return isLogin;
+    }
 }

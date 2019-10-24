@@ -17,7 +17,7 @@ public class User {
         this.id = id;
         this.username = username;
         this.encodedPassword = encodedPassword;
-        this.avatar = "";
+        this.avatar = "https://blog-server.hunger-valley.com/avatar/55.jpg";
         this.createdAt = Instant.now();
         this.updatedAt = Instant.now();
     }
@@ -36,10 +36,6 @@ public class User {
 
     public String getEncodedPassword() {
         return encodedPassword;
-    }
-
-    public void setEncodedPassword(String encodedPassword) {
-        this.encodedPassword = encodedPassword;
     }
 
     public String getAvatar() {
@@ -65,6 +61,5 @@ public class User {
     public void setUpdatedAt(Instant updatedAt) {
         this.updatedAt = updatedAt;
     }
-
 
 }

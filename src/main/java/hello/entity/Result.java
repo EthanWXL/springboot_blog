@@ -1,22 +1,33 @@
+
+
 package hello.entity;
 
 public abstract class Result<T> {
-    private String msg;
-    private String status;
-    private T data;
+    public enum ResultStatus {
+        //status；ok
+        OK("ok"),
+        //status: fail
+        FAIL("fail");
 
-    protected Result(String status, String msg) {
-        this(status, msg, null);
+        private String status;
+
+        ResultStatus(String status) {
+            this.status = status;
+        }
     }
 
-    protected Result(String status, String msg, T data) {
+    private ResultStatus status;
+    private String msg;
+    private T data;
+
+    protected Result(ResultStatus status, String msg, T data) {
         this.status = status;
         this.msg = msg;
         this.data = data;
     }
 
     public String getStatus() {
-        return status;
+        return status.status;
     }
 
     public String getMsg() {
@@ -27,4 +38,15 @@ public abstract class Result<T> {
         return data;
     }
 
+    public void setStatus(ResultStatus status) {
+        this.status = status;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+
+    public void setData(T data) {
+        this.data = data;
+    }
 }

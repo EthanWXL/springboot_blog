@@ -93,7 +93,7 @@
             <artifactId>flyway-maven-plugin</artifactId>
             <version>6.0.7</version>
             <configuration>
-                <url>jdbc:mysql://localhost:3306/xdml</url>
+                <url>jdbc:mysql://localhost:3306/blog</url>
                 <user>root</user>
                 <password>root</password>
             </configuration>
